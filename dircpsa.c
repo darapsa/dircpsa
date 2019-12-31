@@ -4,7 +4,7 @@
 
 typedef struct {
 	char *channel;
-	char *message;
+	char *log;
 } irc_ctx_t;
 
 void event_connect(irc_session_t *session, const char *event, const char *origin
@@ -18,18 +18,35 @@ void event_join(irc_session_t *session, const char *event, const char *origin
 		, const char **params, unsigned int count)
 {
 	irc_ctx_t *ctx = (irc_ctx_t *)irc_get_ctx(session);
+	FILE *fp = fopen(ctx->log, "r");
+	size_t n = 0;
+	int c;
+	while ((c = fgetc(fp)) != EOF)
+		n++;
+	char message[n + 1];
+	n = 0;
+	fp = freopen(ctx->log, "r", fp);
+	while ((c = fgetc(fp)) != EOF) {
+		if (c == '\n')
+			message[n++] = '\t';
+		else
+			message[n++] = c;
+	}
+	message[n] = '\0';
+	fclose(fp);
+
 	irc_cmd_user_mode(session, "+i");
-	irc_cmd_msg(session, params[0], ctx->message);
-	irc_cmd_quit (session, "selesai");
+	irc_cmd_msg(session, params[0], message);
+	irc_cmd_quit (session, "Selesai.");
 }
 
 int main (int argc, char *argv[])
 {
 	if (argc != 3) {
-		printf("Usage: %s <channel> <message>\n", argv[0]);
+		printf("Usage: %s <channel> <log>\n", argv[0]);
 		return 1;
 	}
-	irc_ctx_t ctx = {.channel = argv[1], .message = argv[2]};
+	irc_ctx_t ctx = {.channel = argv[1], .log = argv[2]};
 
 	irc_callbacks_t	callbacks;
 	memset(&callbacks, 0, sizeof(callbacks));
