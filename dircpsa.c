@@ -60,7 +60,7 @@ int main (int argc, char *argv[])
 	}
 	irc_set_ctx(session, &ctx);
 
-	if (irc_connect(session, "irc.darapsa.co.id", 6667, 0, "git", "interch"
+	if (irc_connect(session, "darapsa.net", 6667, 0, "git", "interch"
 				, "Darapsa")) {
 		printf("Could not connect: %s\n"
 				, irc_strerror(irc_errno(session)));
