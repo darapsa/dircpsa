@@ -37,7 +37,7 @@ void event_join(irc_session_t *session, const char *event, const char *origin
 
 	irc_cmd_user_mode(session, "+i");
 	irc_cmd_msg(session, params[0], message);
-	irc_cmd_quit (session, "Selesai.");
+	irc_cmd_quit(session, "Leaving.");
 }
 
 int main (int argc, char *argv[])
@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
 
 	if (irc_run(session)) {
 		printf ("Could not connect or I/O error: %s\n"
-				, irc_strerror (irc_errno(session)));
+				, irc_strerror(irc_errno(session)));
 		return 1;
 	}
 
