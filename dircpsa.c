@@ -46,7 +46,7 @@ int main (int argc, char *argv[])
 		printf("Usage: %s <channel> <log>\n", argv[0]);
 		return 1;
 	}
-	irc_ctx_t ctx = {.channel = argv[1], .log = argv[2]};
+	irc_ctx_t ctx = {argv[1], argv[2]};
 
 	irc_callbacks_t	callbacks;
 	memset(&callbacks, 0, sizeof(callbacks));
