@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
 	}
 
 	if (irc_run(session)) {
-		printf("Could not connect or I/O error: %s\n", irc_strerror(irc_errno(s)));
+		printf("Could not connect or I/O error: %s\n", irc_strerror(irc_errno(session)));
 		return 1;
 	}
 
