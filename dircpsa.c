@@ -70,5 +70,5 @@ int main (int argc, char *argv[])
 	if (irc_run(session))
 		return 1;
 
-	return 1;
+	return 0;
 }
