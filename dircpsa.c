@@ -68,8 +68,13 @@ int main (int argc, char *argv[])
 	}
 
 	if (irc_run(session)) {
-		printf("Could not connect or I/O error: %s\n", irc_strerror(irc_errno(session)));
-		return 1;
+		int errno = irc_errno(session);
+		if (errno == LIBIRC_ERR_TERMINATED)
+			return 0;
+		else {
+			printf("Could not connect or I/O error: %s\n", irc_strerror(errno));
+			return 1;
+		}
 	}
 
 	return 0;
